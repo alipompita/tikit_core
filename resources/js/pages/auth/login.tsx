@@ -89,7 +89,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                         Log in
                     </Button>
 
-                    <TextLink href="/auth/google" tabIndex={5}>
+                    <TextLink href="auth/google" tabIndex={5}>
                         Continue with Google
                     </TextLink>
 
