@@ -12,6 +12,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('dashboard', function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
+
+    Route::resource('events', \App\Http\Controllers\EventController::class);
 });
 
 Route::get('/auth/google', [GoogleController::class, 'redirect'])->name('google.redirect');
