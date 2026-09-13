@@ -1,5 +1,6 @@
 import { FormEvent } from 'react';
 import { useForm } from '@inertiajs/react';
+import { route } from 'ziggy-js'
 import { CalendarDays, LoaderCircle } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
@@ -42,7 +43,7 @@ export default function EventForm({
     function submit(event: FormEvent) {
         event.preventDefault();
 
-        form.post('/events');
+        form.post(route('events.store'));
     }
 
     return (
