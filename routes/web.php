@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\Auth\GoogleController;
+use App\Http\Controllers\EventTicketTypeController;
 
 Route::get('/', function () {
     return Inertia::render('welcome');
@@ -14,6 +15,19 @@ Route::middleware(['auth'])->group(function () {
     })->name('dashboard');
 
     Route::resource('events', \App\Http\Controllers\EventController::class);
+
+    Route::prefix('events/{event}/ticket-types')
+        ->name('events.ticket-types.')
+        ->group(function () {
+            Route::get('/', [EventTicketTypeController::class, 'index'])
+                ->name('index');
+
+            Route::get('/create', [EventTicketTypeController::class, 'create'])
+                ->name('create');
+
+            Route::post('/', [EventTicketTypeController::class, 'store'])
+                ->name('store');
+        });
 });
 
 Route::get('/auth/google', [GoogleController::class, 'redirect'])->name('google.redirect');
