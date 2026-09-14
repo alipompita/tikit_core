@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\EventStatus;
 use App\Http\Requests\StoreEventRequest;
+use App\Http\Requests\UpdateEventRequest;
 use App\Models\Event;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -63,21 +64,11 @@ class EventController extends Controller
         ]);
     }
 
-    public function update(Request $request, Event $event): RedirectResponse
-    {
-        Gate::authorize('update', $event);
-
-        // We'll replace this with UpdateEventRequest shortly.
-        $event->update($request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'description' => ['nullable', 'string'],
-            'venue' => ['nullable', 'string', 'max:255'],
-            'address' => ['nullable', 'string', 'max:255'],
-            'starts_at' => ['required', 'date'],
-            'ends_at' => ['required', 'date', 'after:starts_at'],
-            'is_public' => ['required', 'boolean'],
-            'is_paid' => ['required', 'boolean'],
-        ]));
+    public function update(
+        UpdateEventRequest $request,
+        Event $event
+    ): RedirectResponse {
+        $event->update($request->validated());
 
         return redirect()
             ->route('events.show', $event)
